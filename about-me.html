@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kesin Wang | Product Strategist & Monster High Aesthetic Portfolio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Creepster&family=Fredoka:wght@400;600;700&family=Noto+Sans+TC:wght@400;700;900&family=Permanent+Marker&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mh: {
+                            pink: '#FF007F',
+                            lightpink: '#FF69B4',
+                            purple: '#2A0845',
+                            darkpurple: '#12021F',
+                            cyan: '#00F0FF',
+                            neon: '#39FF14',
+                            paper: '#FAF5FF',
+                            accent: '#8A2BE2'
+                        }
+                    },
+                    fontFamily: {
+                        comic: ['Bangers', 'cursive'],
+                        creepy: ['Creepster', 'cursive'],
+                        hand: ['Permanent Marker', 'cursive'],
+                        head: ['Syne', 'Noto Sans TC', 'sans-serif'],
+                        body: ['Fredoka', 'Noto Sans TC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-grid: rgba(255, 0, 127, 0.08);
+            --border-color: #FF007F;
+        }
+
+        .dark {
+            --bg-grid: rgba(0, 240, 255, 0.05);
+            --border-color: #00F0FF;
+        }
+
+        /* Halftone Comic Pattern Background */
+        .halftone-pattern {
+            background-image: radial-gradient(var(--border-color) 1.5px, transparent 1.5px);
+            background-size: 18px 18px;
+        }
+
+        /* Torn Paper Border Mask Effect */
+        .torn-top {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 92%, 95% 97%, 88% 91%, 80% 98%, 73% 90%, 65% 97%, 55% 91%, 45% 98%, 35% 92%, 25% 97%, 15% 90%, 8% 98%, 0% 93%);
+        }
+        
+        .torn-bottom {
+            clip-path: polygon(0% 7%, 8% 1%, 15% 8%, 25% 2%, 35% 8%, 45% 1%, 55% 7%, 65% 1%, 73% 8%, 80% 1%, 88% 8%, 95% 2%, 100% 7%, 100% 100%, 0% 100%);
+        }
+
+        /* Comic Book Shadow Effect */
+        .comic-box {
+            box-shadow: 6px 6px 0px #000;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .comic-box:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0px #FF007F;
+        }
+
+        .comic-box-cyan {
+            box-shadow: 6px 6px 0px #000;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .comic-box-cyan:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0px #00F0FF;
+        }
+
+        /* Stitched Line Border */
+        .stitched-border {
+            border: 3px dashed #FF007F;
+            border-radius: 12px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #12021F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF007F;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
+
+        /* Audio Visualizer Wave Animation */
+        @keyframes audioWave {
+            0%, 100% { height: 4px; }
+            50% { height: 18px; }
+        }
+        .audio-bar {
+            width: 3px;
+            background-color: #FF007F;
+            animation: audioWave 1s infinite ease-in-out;
+        }
+        .audio-bar:nth-child(2) { animation-delay: 0.2s; }
+        .audio-bar:nth-child(3) { animation-delay: 0.4s; }
+        .audio-bar:nth-child(4) { animation-delay: 0.1s; }
+
+        .audio-playing .audio-bar {
+            display: inline-block;
+        }
+        .audio-paused .audio-bar {
+            animation: none;
+            height: 4px;
+        }
+
+        /* Monster High Ribbon Badge Rotation */
+        @keyframes floatTilt {
+            0%, 100% { transform: rotate(-2deg) translateY(0px); }
+            50% { transform: rotate(2deg) translateY(-8px); }
+        }
+        .float-badge {
+            animation: floatTilt 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="font-body bg-mh-paper dark:bg-mh-darkpurple text-slate-800 dark:text-mh-paper transition-colors duration-300 min-h-screen relative overflow-x-hidden selection:bg-mh-pink selection:text-white">
+
+    <!-- HTML Audio Element for BGM -->
+    <audio id="bgmAudio" loop src="https://img.ai365.fans/artworks/26d9781e-c8fc-4c04-86c1-0c4e5c936f18/f73ewryq1ip.mp3"></audio>
+
+    <!-- Top Navigation HUD Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 px-4 py-3 bg-white/80 dark:bg-mh-darkpurple/90 backdrop-blur-md border-b-4 border-mh-pink transition-all">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Brand Logo / Badge -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-mh-pink text-white flex items-center justify-center rounded-full border-2 border-black font-comic text-xl shadow-[2px_2px_0px_#000] group-hover:rotate-12 transition-transform">
+                    KW
+                </div>
+                <span class="font-comic text-2xl tracking-wider text-mh-pink dark:text-mh-cyan drop-shadow-[1px_1px_0px_#000]">
+                    KESIN WANG <span class="text-xs font-hand text-black dark:text-white hidden sm:inline-block ml-1">★ BE UNIQUE. BE FANG-TASTIC!</span>
+                </span>
+            </a>
+
+            <!-- Action Controls (Language, Music, Theme) -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                
+                <!-- Music Control Button -->
+                <button id="bgmBtn" onclick="toggleBGM()" title="Play / Pause BGM" class="flex items-center gap-2 px-3 py-1.5 bg-mh-pink/10 dark:bg-mh-pink/20 border-2 border-mh-pink rounded-full hover:bg-mh-pink hover:text-white text-mh-pink dark:text-mh-lightpink font-bold text-xs sm:text-sm transition-all comic-box">
+                    <i id="bgmIcon" class="fa-solid fa-music"></i>
+                    <span id="bgmText" class="hidden md:inline font-comic tracking-wide">BGM: OFF</span>
+                    <!-- Audio Wave Indicator -->
+                    <div id="audioVisualizer" class="flex items-end gap-0.5 h-4 audio-paused">
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                    </div>
+                </button>
+
+                <!-- Language Switcher Button -->
+                <button onclick="toggleLanguage()" class="px-3 py-1.5 bg-mh-cyan/20 dark:bg-mh-cyan/30 border-2 border-mh-cyan rounded-full text-slate-900 dark:text-mh-cyan font-comic text-sm hover:bg-mh-cyan hover:text-black transition-all comic-box-cyan">
+                    <i class="fa-solid fa-globe mr-1"></i> <span id="langLabel">EN / 中文</span>
+                </button>
+
+                <!-- Dark / Light Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-9 h-9 flex items-center justify-center bg-purple-200 dark:bg-purple-900 border-2 border-black dark:border-mh-pink rounded-full text-purple-900 dark:text-mh-cyan font-bold hover:scale-110 transition-all comic-box">
+                    <i id="themeIcon" class="fa-solid fa-moon"></i>
+                </button>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-16">
+        
+        <!-- HERO SECTION -->
+        <section class="relative px-4 py-12 md:py-20 max-w-7xl mx-auto overflow-hidden">
+            <!-- Background Graphic Elements -->
+            <div class="absolute top-10 left-5 w-32 h-32 halftone-pattern opacity-30 rounded-full pointer-events-none"></div>
+            <div class="absolute bottom-5 right-5 w-48 h-48 halftone-pattern opacity-20 rounded-full pointer-events-none"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Text / Persona Section (7 Cols) -->
+                <div class="lg:col-span-7 space-y-6 z-10">
+                    
+                    <!-- Top Comic Speech Tag -->
+                    <div class="inline-block bg-mh-pink text-white font-comic text-lg sm:text-xl px-4 py-1.5 rounded-full border-2 border-black comic-box float-badge">
+                        <i class="fa-solid fa-bolt mr-2 text-yellow-300"></i>
+                        <span data-zh="BE UNIQUE. BE FANG-TASTIC!" data-en="BE UNIQUE. BE FANG-TASTIC!">BE UNIQUE. BE FANG-TASTIC!</span>
+                    </div>
+
+                    <!-- Main Name Heading -->
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-comic tracking-wider text-slate-900 dark:text-white uppercase leading-none drop-shadow-[3px_3px_0px_#FF007F]">
+                        Kesin Wang
+                    </h1>
+
+                    <!-- Title Banner -->
+                    <div class="inline-flex items-center gap-2 bg-black text-mh-cyan font-comic text-xl sm:text-2xl px-4 py-2 rounded-lg border-2 border-mh-cyan rotate-[-1deg]">
+                        <i class="fa-solid fa-wand-magic-sparkles text-mh-pink"></i>
+                        <span data-zh="數位行銷 ➔ 產品管理 (PM) 跨界戰略家" data-en="Digital Marketer ➔ Product Management Strategist">數位行銷 ➔ 產品管理 (PM) 跨界戰略家</span>
+                    </div>
+
+                    <!-- Short Condensed Professional Bio -->
+                    <p class="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-body bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm p-4 rounded-xl border-l-4 border-mh-pink shadow-md" data-zh="科技業跨界專才，曾深耕歐洲、中東、非洲與美國市場。以 SEO/GEO 策略驅動西語市場營收創下 4 倍成長，並從零建立葡語市場實現 109% CMGR 有機流量爆發增長。目前正結合敏捷專案管理（Agile）、產品思維及硬核技術（Python、UI/UX、Git），致力於半導體與科技產業帶領產品戰略與跨部門高效執行。" data-en="Tech professional transitioning from Digital Marketing to Product Management. Drove 4x revenue growth in Spanish-speaking markets and built the Portuguese market from scratch to 109% CMGR in organic traffic via SEO/GEO across EMEA & US. Currently expanding skills in Agile, product thinking, Python, UI/UX, and Git to lead product strategy in tech and semiconductor industries.">
+                        科技業跨界專才，曾深耕歐洲、中東、非洲與美國市場。以 SEO/GEO 策略驅動西語市場營收創下 4 倍成長，並從零建立葡語市場實現 109% CMGR 有機流量爆發增長。目前正結合敏捷專案管理（Agile）、產品思維及硬核技術（Python、UI/UX、Git），致力於半導體與科技產業帶領產品戰略與跨部門高效執行。
+                    </p>
+
+                    <!-- Creative Interest Keywords Badge Row -->
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-950/80 border border-mh-pink text-mh-pink dark:text-mh-lightpink rounded-full text-xs font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-book-bookmark"></i> <span data-zh="文學創作" data-en="Literature">文學創作</span>
+                        </span>
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-950/80 border border-mh-cyan text-cyan-600 dark:text-mh-cyan rounded-full text-xs font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-palette"></i> <span data-zh="美式漫畫藝術" data-en="Comic Art">美式漫畫藝術</span>
+                        </span>
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-950/80 border border-yellow-400 text-yellow-600 dark:text-yellow-300 rounded-full text-xs font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-pen-nib"></i> <span data-zh="手作與手寫物" data-en="Handcrafts">手作與手寫物</span>
+                        </span>
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-950/80 border border-lime-400 text-lime-600 dark:text-mh-neon rounded-full text-xs font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-film"></i> <span data-zh="冷門電影與動漫" data-en="Niche Films & Anime">冷門電影與動漫</span>
+                        </span>
+                    </div>
+
+                    <!-- Call to Action Buttons -->
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="https://www.linkedin.com/in/kesin-wang/" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 bg-mh-pink text-white font-comic text-lg sm:text-xl rounded-xl border-2 border-black comic-box hover:bg-black hover:text-mh-pink transition-all">
+                            <i class="fa-brands fa-linkedin text-2xl"></i>
+                            <span data-zh="LinkedIn 履歷" data-en="LinkedIn Profile">LinkedIn 履歷</span>
+                        </a>
+                        <a href="https://www.instagram.com/xinbeinglazy?igsh=N281aGl2eTYyMGhi&utm_source=qr" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 text-white font-comic text-lg sm:text-xl rounded-xl border-2 border-black comic-box hover:scale-105 transition-all">
+                            <i class="fa-brands fa-instagram text-2xl"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="#interests" class="inline-flex items-center gap-2 px-5 py-3 bg-mh-cyan text-black font-comic text-lg sm:text-xl rounded-xl border-2 border-black comic-box-cyan hover:bg-black hover:text-mh-cyan transition-all">
+                            <i class="fa-solid fa-skull"></i>
+                            <span data-zh="探索靈魂興趣" data-en="Explore Interests">探索靈魂興趣</span>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Right Visual Character Showcase Section (5 Cols) -->
+                <div class="lg:col-span-5 relative flex justify-center">
+                    
+                    <!-- Frame Outer Container with Monster High Torn Aesthetic -->
+                    <div class="relative w-full max-w-md p-4 bg-black rounded-2xl border-4 border-mh-pink comic-box rotate-1 hover:rotate-0 transition-transform duration-300">
+                        
+                        <!-- Skull & Bow Graphic Top Left Tag -->
+                        <div class="absolute -top-6 -left-6 z-20 w-14 h-14 bg-mh-pink rounded-full border-2 border-black flex items-center justify-center text-white text-2xl comic-box shadow-lg rotate-[-12deg]">
+                            💀🎀
+                        </div>
+
+                        <!-- Top Sticker Badge -->
+                        <div class="absolute top-3 right-3 z-20 bg-yellow-300 text-black font-hand text-xs px-2 py-1 border border-black rotate-6 shadow">
+                            FANG-TASTIC!
+                        </div>
+
+                        <!-- Main Illustration Container -->
+                        <div class="relative rounded-xl overflow-hidden border-2 border-mh-cyan bg-slate-900">
+                            <div class="relative w-full bg-gradient-to-b from-purple-900 via-slate-900 to-black p-3 flex flex-col justify-between overflow-hidden">
+                                
+                                <!-- Gothic Street Sign Frame Header -->
+                                <div class="relative z-10 flex justify-between items-start mb-2">
+                                    <div class="bg-black/80 border border-mh-pink px-3 py-1 rounded text-xs font-comic text-mh-pink">
+                                        FANG-TASTIC STYLE
+                                    </div>
+                                    <div class="text-right text-[10px] font-hand text-slate-400">
+                                        #MONSTER_HIGH_STYLE
+                                    </div>
+                                </div>
+
+                                <!-- Center Portrait Photo -->
+                                <div class="relative z-10 my-auto flex flex-col items-center">
+                                    <div class="relative w-full aspect-square rounded-xl border-4 border-mh-pink bg-purple-950/80 overflow-hidden shadow-[0_0_20px_rgba(255,0,127,0.5)] group">
+                                        <img src="https://i.pinimg.com/736x/c0/a0/32/c0a0325749d53f72f0335f177f930ff4.jpg" 
+                                             onerror="this.onerror=null; this.src='https://placehold.co/600x600/12021F/FF007F?text=Kesin+Wang';" 
+                                             alt="Kesin Wang Monster High Style Portrait" 
+                                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                                    </div>
+                                    <div class="mt-3 font-comic text-xl text-mh-pink tracking-widest drop-shadow-[1px_1px_0px_#000]">
+                                        @KESIN_WANG
+                                    </div>
+                                </div>
+
+                                <!-- Bottom Speech Ribbon -->
+                                <div class="relative z-10 mt-2 bg-black/90 border border-mh-cyan p-2 rounded-lg text-center">
+                                    <p class="font-hand text-xs text-mh-cyan" data-zh="「理性的增長邏輯，感性的美學靈魂。」" data-en="“Analytical Growth Logic with a Freaky Chic Soul.”">
+                                        「理性的增長邏輯，感性的美學靈魂。」
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Bottom Tag -->
+                        <div class="mt-3 flex justify-between items-center px-1 font-comic text-sm text-mh-cyan">
+                            <span>BE UNIQUE. BE FANG-TASTIC!</span>
+                            <span class="text-mh-pink">★ 2026 EDITION</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PROFESSIONAL HIGHLIGHTS SECTION (The Growth Engine) -->
+        <section class="py-12 bg-purple-950/20 dark:bg-black/40 border-y-4 border-mh-pink relative">
+            <div class="max-w-7xl mx-auto px-4">
+                
+                <!-- Section Title -->
+                <div class="text-center mb-10">
+                    <span class="font-hand text-mh-pink text-lg tracking-widest block uppercase">Professional Edge</span>
+                    <h2 class="text-3xl sm:text-5xl font-comic tracking-wide text-slate-900 dark:text-white" data-zh="專業秘辛 • 數據與戰略" data-en="PROFESSIONAL HIGHLIGHTS">
+                        專業秘辛 • 數據與戰略
+                    </h2>
+                    <div class="w-24 h-1 bg-mh-cyan mx-auto mt-2"></div>
+                </div>
+
+                <!-- 3 Key Metric Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Card 1: Revenue -->
+                    <div class="bg-white dark:bg-mh-darkpurple border-3 border-black p-6 rounded-2xl comic-box relative overflow-hidden group">
+                        <div class="absolute -right-4 -bottom-4 text-7xl text-mh-pink/10 group-hover:text-mh-pink/20 transition-colors font-comic">
+                            4X
+                        </div>
+                        <div class="w-12 h-12 bg-mh-pink text-white flex items-center justify-center rounded-xl font-comic text-2xl border-2 border-black mb-4">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div class="font-comic text-3xl text-mh-pink mb-1">4x Revenue</div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white" data-zh="西班牙語市場爆發增長" data-en="Spanish Market Revenue Growth">西班牙語市場爆發增長</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300" data-zh="跨 EMEA 與美國市場制定高精準 SEO/GEO 策略，帶動西語區營收翻倍成長 400%。" data-en="Driven 4x revenue growth in Spanish-speaking markets via SEO/GEO strategies across EMEA & US.">
+                            跨 EMEA 與美國市場制定高精準 SEO/GEO 策略，帶動西語區營收翻倍成長 400%。
+                        </p>
+                    </div>
+
+                    <!-- Card 2: CMGR Traffic -->
+                    <div class="bg-white dark:bg-mh-darkpurple border-3 border-black p-6 rounded-2xl comic-box-cyan relative overflow-hidden group">
+                        <div class="absolute -right-4 -bottom-4 text-7xl text-mh-cyan/10 group-hover:text-mh-cyan/20 transition-colors font-comic">
+                            109%
+                        </div>
+                        <div class="w-12 h-12 bg-mh-cyan text-black flex items-center justify-center rounded-xl font-comic text-2xl border-2 border-black mb-4">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <div class="font-comic text-3xl text-mh-cyan mb-1">109% CMGR</div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white" data-zh="葡語有機流量從零建立" data-en="Portuguese Organic Traffic Growth">葡語有機流量從零建立</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300" data-zh="開拓全新葡萄牙語市場，透過自然搜尋與 GEO 佈局達成月複合增長率 109%。" data-en="Built Portuguese market from scratch achieving 109% CMGR in organic traffic.">
+                            開拓全新葡萄牙語市場，透過自然搜尋與 GEO 佈局達成月複合增長率 109%。
+                        </p>
+                    </div>
+
+                    <!-- Card 3: PM Transition -->
+                    <div class="bg-white dark:bg-mh-darkpurple border-3 border-black p-6 rounded-2xl comic-box relative overflow-hidden group">
+                        <div class="absolute -right-4 -bottom-4 text-7xl text-yellow-400/10 group-hover:text-yellow-400/20 transition-colors font-comic">
+                            PM
+                        </div>
+                        <div class="w-12 h-12 bg-yellow-400 text-black flex items-center justify-center rounded-xl font-comic text-2xl border-2 border-black mb-4">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <div class="font-comic text-3xl text-yellow-400 mb-1">Tech / Semi</div>
+                        <h3 class="font-bold text-lg mb-2 text-slate-900 dark:text-white" data-zh="敏捷與硬核技術拓展" data-en="Product Management & Tech Toolkit">敏捷與硬核技術拓展</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300" data-zh="精進 Agile、Python、UI/UX 設計與 Git 版本控制，目標為半導體與科技領域領航產品發展。" data-en="Mastering Agile, Python, UI/UX, and Git to execute cross-functional product management.">
+                            精進 Agile、Python、UI/UX 設計與 Git 版本控制，目標為半導體與科技領域領航產品發展。
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CREATIVE & PERSONAL INTERESTS SECTION (The Soul Vault) -->
+        <section id="interests" class="py-16 max-w-7xl mx-auto px-4">
+            
+            <div class="text-center mb-12">
+                <span class="bg-mh-pink text-white font-comic text-sm px-3 py-1 rounded-full border border-black inline-block mb-2">
+                    FREAKY CHIC SOUL
+                </span>
+                <h2 class="text-4xl sm:text-6xl font-comic tracking-wide text-slate-900 dark:text-white" data-zh="創意靈魂與藝術收藏" data-en="CREATIVE PASSIONS & OBSESSIONS">
+                    創意靈魂與藝術收藏
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-hand mt-2" data-zh="「在數據與邏輯之外，我是文學、動漫與藝術的熱烈追尋者。」" data-en="“Beyond data and logic, I am an avid follower of literature, craft, and niche art.”">
+                    「在數據與邏輯之外，我是文學、動漫與藝術的熱烈追尋者。」
+                </p>
+            </div>
+
+            <!-- 4 Aesthetic Grid Cards for Interests -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Interest 1: Literature & Writing -->
+                <div class="bg-purple-50 dark:bg-purple-950/30 border-3 border-mh-pink p-6 rounded-2xl comic-box relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-mh-pink text-white rounded-xl border-2 border-black flex items-center justify-center text-2xl font-comic shadow">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-comic text-slate-900 dark:text-white" data-zh="文學與筆墨之愛" data-en="Literature & Typography">文學與筆墨之愛</h3>
+                            <span class="text-xs font-hand text-mh-pink" data-zh="#沉浸文字世界 #排版美學" data-en="#Poetry #Storytelling #PrintedArt">#沉浸文字世界 #排版美學</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4" data-zh="對文學作品保持深度的渴望，著迷於文字結構、詩意敘事與書籍設計的裝幀細節。認為好的產品設計就像一篇結構嚴謹而富有靈魂的小說。" data-en="Deeply passionate about world literature, narrative architecture, and book design details. I view great product UI as well-crafted storytelling.">
+                        對文學作品保持深度的渴望，著迷於文字結構、詩意敘事與書籍設計的裝幀細節。認為好的產品設計就像一篇結構嚴謹而富有靈魂的小說。
+                    </p>
+                    <div class="flex items-center gap-2 text-xs font-bold text-mh-pink bg-mh-pink/10 p-2.5 rounded-lg border border-mh-pink/30">
+                        <i class="fa-solid fa-feather"></i>
+                        <span data-zh="喜歡收藏：古典文學、當代詩集、怪談小說" data-en="Favorites: Classic Lit, Modern Poetry, Gothic Fiction">喜歡收藏：古典文學、當代詩集、怪談小說</span>
+                    </div>
+                </div>
+
+                <!-- Interest 2: Handmade & Calligraphy -->
+                <div class="bg-cyan-50 dark:bg-slate-900/50 border-3 border-mh-cyan p-6 rounded-2xl comic-box-cyan relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-mh-cyan text-black rounded-xl border-2 border-black flex items-center justify-center text-2xl font-comic shadow">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-comic text-slate-900 dark:text-white flex items-center gap-2" data-zh="手作與手寫物品狂熱" data-en="Handcrafts & Handwritten Objects">
+                                手作與手寫物品狂熱
+                            </h3>
+                            <span class="text-xs font-hand text-mh-cyan flex items-center gap-1 mt-1" data-zh="#鋼筆墨水 #手帳拼貼 #質感溫度" data-en="#Calligraphy #Journaling #DIYCrafts">
+                                <i class="fa-solid fa-scissors text-mh-pink"></i> #鋼筆墨水 #手帳拼貼 #質感溫度
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4" data-zh="熱愛手寫筆跡獨一無二的墨跡線條、手作革物與雜貨拼貼。手作的過程帶來極致的專注與心流，也是我鍛鍊 UI/UX 細節敏銳度的源泉。" data-en="Enthusiastic about calligraphy ink, handcrafted stationary, leatherwork, and collage journals. Crafting grounds my focus and sharpens my eye for UI design.">
+                        熱愛手寫筆跡獨一無二的墨跡線條、手作革物與雜貨拼貼。手作的過程帶來極致的專注與心流，也是我鍛鍊 UI/UX 細節敏銳度的源泉。
+                    </p>
+                    <div class="flex items-center gap-2 text-xs font-bold text-mh-cyan bg-mh-cyan/10 p-2.5 rounded-lg border border-mh-cyan/30">
+                        <i class="fa-solid fa-pen-ruler"></i>
+                        <span data-zh="收藏愛好：鋼筆墨水、客製印章、手工紙、皮革手帳" data-en="Craft Collectibles: Fountain pens, custom stamps, handmade paper">收藏愛好：鋼筆墨水、客製印章、手工紙、皮革手帳</span>
+                    </div>
+                </div>
+
+                <!-- Interest 3: Anime, Cartoons & Monster High Style -->
+                <div class="bg-purple-50 dark:bg-purple-950/30 border-3 border-yellow-400 p-6 rounded-2xl comic-box relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-yellow-400 text-black rounded-xl border-2 border-black flex items-center justify-center text-2xl font-comic shadow">
+                            <i class="fa-solid fa-mask"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-comic text-slate-900 dark:text-white" data-zh="動漫、卡通與 Monster High 美學" data-en="Cartoons, Anime & Comic World">動漫、卡通與 Monster High 美學</h3>
+                            <span class="text-xs font-hand text-yellow-500" data-zh="#MonsterHigh #美式漫畫 #奇幻角色" data-en="#MonsterHigh #AmericanComics #CharacterDesign">#MonsterHigh #美式漫畫 #奇幻角色</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4" data-zh="鍾情於 Monster High 酷黑哥德風格與『Be Unique, Be Monster』的核心精神。喜愛充滿獨創世界觀的卡通、動漫作品與輕小說創作。" data-en="Inspired by Monster High's bold gothic chic & 'Be Unique, Be Monster' ethos. Devoted fan of animated series, light novels, and vibrant character lore.">
+                        鍾情於 Monster High 酷黑哥德風格與『Be Unique, Be Monster』的核心精神。喜愛充滿獨創世界觀的卡通、動漫作品與輕小說創作。
+                    </p>
+                    <div class="flex items-center gap-2 text-xs font-bold text-yellow-600 dark:text-yellow-300 bg-yellow-400/10 p-2.5 rounded-lg border border-yellow-400/30">
+                        <i class="fa-solid fa-heart"></i>
+                        <span data-zh="作品欣賞：Monster High 漫畫、怪奇美學動畫、奇幻漫畫" data-en="Favorites: Monster High, Gothic Animation, Fantasy Comics">作品欣賞：Monster High 漫畫、怪奇美學動畫、奇幻漫畫</span>
+                    </div>
+                </div>
+
+                <!-- Interest 4: Niche Movies & Cult Cinema -->
+                <div class="bg-slate-100 dark:bg-slate-900/50 border-3 border-lime-400 p-6 rounded-2xl comic-box-cyan relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-lime-400 text-black rounded-xl border-2 border-black flex items-center justify-center text-2xl font-comic shadow">
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-comic text-slate-900 dark:text-white" data-zh="冷門電影與獨立影音" data-en="Niche Movies & Cult Cinema">冷門電影與獨立影音</h3>
+                            <span class="text-xs font-hand text-lime-500" data-zh="#小眾電影 #獨立影展 #黑暗美學" data-en="#CultFilms #IndieCinema #Atmospheric">#小眾電影 #獨立影展 #黑暗美學</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4" data-zh="專挑小眾、冷門、非主流獨立電影與經典邪典電影（Cult Films）。欣賞不按牌理出牌的導演鏡頭語言、強烈視覺對比與實驗性質音效設計。" data-en="Afficionado of obscure indie cinema, underground film art, and cult classics. I appreciate unconventional storytelling and striking color grade aesthetics.">
+                        專挑小眾、冷門、非主流獨立電影與經典邪典電影（Cult Films）。欣賞不按牌理出牌的導演鏡頭語言、強烈視覺對比與實驗性質音效設計。
+                    </p>
+                    <div class="flex items-center gap-2 text-xs font-bold text-lime-600 dark:text-mh-neon bg-lime-400/10 p-2.5 rounded-lg border border-lime-400/30">
+                        <i class="fa-solid fa-film"></i>
+                        <span data-zh="觀影偏好：哥德驚悚、定格動畫、心理魔幻電影" data-en="Preferences: Gothic Thrillers, Stop-motion, Surrealist Films">觀影偏好：哥德驚悚、定格動畫、心理魔幻電影</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CONTACT & FOOTER SECTION -->
+        <section class="py-12 max-w-5xl mx-auto px-4 text-center">
+            
+            <div class="bg-white dark:bg-mh-darkpurple border-4 border-black p-8 rounded-3xl comic-box relative">
+                
+                <div class="w-16 h-16 bg-mh-pink text-white rounded-full border-2 border-black flex items-center justify-center text-3xl font-comic mx-auto -mt-14 shadow-lg">
+                    ✉️
+                </div>
+
+                <h2 class="text-3xl sm:text-5xl font-comic mt-4 text-slate-900 dark:text-white" data-zh="聯絡與跨界合作" data-en="LET'S CONNECT & CREATE">
+                    聯絡與跨界合作
+                </h2>
+
+                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mt-2 font-body" data-zh="無論是半導體/科技業產品管理戰略，或是文學、藝術與美式漫畫風格專案討論，都歡迎與我交流！" data-en="Whether discussing Tech/Semiconductor PM strategies or creative art collaborations, feel free to reach out!">
+                    無論是半導體/科技業產品管理戰略，或是文學、藝術與美式漫畫風格專案討論，都歡迎與我交流！
+                </p>
+
+                <!-- Social Links Buttons -->
+                <div class="mt-6 flex flex-wrap justify-center gap-4">
+                    <a href="https://www.linkedin.com/in/kesin-wang/" target="_blank" class="inline-flex items-center gap-2 px-6 py-3.5 bg-mh-pink text-white font-comic text-xl sm:text-2xl rounded-2xl border-2 border-black comic-box hover:bg-black hover:text-mh-cyan transition-all">
+                        <i class="fa-brands fa-linkedin text-2xl sm:text-3xl"></i>
+                        <span>LINKEDIN</span>
+                    </a>
+                    <a href="https://www.instagram.com/xinbeinglazy?igsh=N281aGl2eTYyMGhi&utm_source=qr" target="_blank" class="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 text-white font-comic text-xl sm:text-2xl rounded-2xl border-2 border-black comic-box hover:scale-105 transition-all">
+                        <i class="fa-brands fa-instagram text-2xl sm:text-3xl"></i>
+                        <span>INSTAGRAM</span>
+                    </a>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 dark:text-slate-400 font-hand">
+                    <span>© 2026 KESIN WANG. ALL RIGHTS RESERVED.</span>
+                    <span class="mt-2 sm:mt-0">BE UNIQUE. BE FANG-TASTIC! 💀🎀</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        /* ----------------------------------------------------
+         * 1. LANGUAGE TOGGLE SYSTEM (ZH / EN)
+         * ---------------------------------------------------- */
+        let currentLang = 'zh';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            const elements = document.querySelectorAll('[data-zh]');
+            
+            elements.forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) {
+                    el.textContent = text;
+                }
+            });
+
+            const langLabel = document.getElementById('langLabel');
+            langLabel.textContent = currentLang === 'zh' ? 'EN / 中文' : '中文 / EN';
+        }
+
+        /* ----------------------------------------------------
+         * 2. DARK / LIGHT THEME TOGGLE SYSTEM
+         * ---------------------------------------------------- */
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeIcon.className = 'fa-solid fa-sun text-yellow-500';
+            } else {
+                html.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-moon text-mh-cyan';
+            }
+        }
+
+        /* ----------------------------------------------------
+         * 3. BGM AUDIO PLAYER CONTROLLER
+         * ---------------------------------------------------- */
+        const audio = document.getElementById('bgmAudio');
+        const bgmBtn = document.getElementById('bgmBtn');
+        const bgmIcon = document.getElementById('bgmIcon');
+        const bgmText = document.getElementById('bgmText');
+        const audioVisualizer = document.getElementById('audioVisualizer');
+        let isPlaying = false;
+
+        function toggleBGM() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                bgmIcon.className = 'fa-solid fa-music';
+                bgmText.textContent = 'BGM: OFF';
+                audioVisualizer.className = 'flex items-end gap-0.5 h-4 audio-paused';
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    bgmIcon.className = 'fa-solid fa-pause text-mh-pink';
+                    bgmText.textContent = 'BGM: ON';
+                    audioVisualizer.className = 'flex items-end gap-0.5 h-4 audio-playing';
+                }).catch(err => {
+                    console.log("Autoplay interaction blocked:", err);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
